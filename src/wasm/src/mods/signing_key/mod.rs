@@ -5,7 +5,7 @@ use crate::Ed25519VerifyingKey;
 
 use memory_wasm::Memory;
 
-use crate::rjse;
+use crate::libs::jse::rjse;
 
 #[wasm_bindgen]
 pub struct Ed25519SigningKey {
@@ -77,8 +77,6 @@ impl Ed25519SigningKey {
 
     #[wasm_bindgen]
     pub fn verify_strict(&self, bytes: &Memory, signature: &Ed25519Signature) -> bool {
-        self.inner
-            .verify_strict(&bytes.inner, &signature.inner)
-            .is_ok()
+        self.inner.verify_strict(&bytes.inner, &signature.inner).is_ok()
     }
 }
