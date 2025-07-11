@@ -4,6 +4,8 @@ use crate::mods::signature::Ed25519Signature;
 
 use memory_wasm::Memory;
 
+use crate::rjse;
+
 #[wasm_bindgen]
 pub struct Ed25519VerifyingKey {
     pub(crate) inner: ed25519_dalek::VerifyingKey,
@@ -18,14 +20,9 @@ impl Ed25519VerifyingKey {
 
     #[wasm_bindgen]
     pub fn from_bytes(bytes: &Memory) -> Result<Ed25519VerifyingKey, JsError> {
-        let sized: &[u8; 32] = bytes
-            .inner
-            .as_slice()
-            .try_into()
-            .map_err(|_| JsError::new("Ed25519VerifyingKey::from_bytes"))?;
+        let sized: &[u8; 32] = rjse!(bytes.inner.as_slice().try_into())?;
 
-        let rpublic = ed25519_dalek::VerifyingKey::from_bytes(sized);
-        let inner = rpublic.map_err(|_| JsError::new("Ed25519VerifyingKey::from_bytes"))?;
+        let inner = rjse!(ed25519_dalek::VerifyingKey::from_bytes(sized))?;
 
         Ok(Self { inner })
     }

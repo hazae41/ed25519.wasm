@@ -5,6 +5,8 @@ use crate::Ed25519VerifyingKey;
 
 use memory_wasm::Memory;
 
+use crate::rjse;
+
 #[wasm_bindgen]
 pub struct Ed25519SigningKey {
     pub(crate) inner: ed25519_dalek::SigningKey,
@@ -26,11 +28,7 @@ impl Ed25519SigningKey {
 
     #[wasm_bindgen]
     pub fn from_bytes(bytes: &Memory) -> Result<Ed25519SigningKey, JsError> {
-        let sized: &[u8; 32] = bytes
-            .inner
-            .as_slice()
-            .try_into()
-            .map_err(|_| JsError::new("Ed25519SigningKey::from_bytes"))?;
+        let sized: &[u8; 32] = rjse!(bytes.inner.as_slice().try_into())?;
 
         let inner = ed25519_dalek::SigningKey::from_bytes(sized);
 
@@ -39,14 +37,9 @@ impl Ed25519SigningKey {
 
     #[wasm_bindgen]
     pub fn from_keypair_bytes(bytes: &Memory) -> Result<Ed25519SigningKey, JsError> {
-        let sized: &[u8; 64] = bytes
-            .inner
-            .as_slice()
-            .try_into()
-            .map_err(|_| JsError::new("Ed25519SigningKey::from_keypair_bytes"))?;
+        let sized: &[u8; 64] = rjse!(bytes.inner.as_slice().try_into())?;
 
-        let rkeypair = ed25519_dalek::SigningKey::from_keypair_bytes(sized);
-        let inner = rkeypair.map_err(|_| JsError::new("Ed25519SigningKey::from_keypair_bytes"))?;
+        let inner = rjse!(ed25519_dalek::SigningKey::from_keypair_bytes(sized))?;
 
         Ok(Self { inner })
     }

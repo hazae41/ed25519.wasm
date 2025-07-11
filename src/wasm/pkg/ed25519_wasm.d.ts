@@ -1,118 +1,35 @@
 /* tslint:disable */
 /* eslint-disable */
-/**
-*/
 export class Ed25519Signature {
   [Symbol.dispose](): void;
-/**
-* @param {Memory} bytes
-*/
   constructor(bytes: Memory);
-/**
-* @param {Memory} bytes
-* @returns {Ed25519Signature}
-*/
   static from_bytes(bytes: Memory): Ed25519Signature;
-/**
-* @returns {Memory}
-*/
   to_bytes(): Memory;
-/**
-* @returns {Memory}
-*/
   r_bytes(): Memory;
-/**
-* @returns {Memory}
-*/
   s_bytes(): Memory;
 }
-/**
-*/
 export class Ed25519SigningKey {
   [Symbol.dispose](): void;
-/**
-*/
   constructor();
-/**
-* @returns {Ed25519SigningKey}
-*/
   static random(): Ed25519SigningKey;
-/**
-* @param {Memory} bytes
-* @returns {Ed25519SigningKey}
-*/
   static from_bytes(bytes: Memory): Ed25519SigningKey;
-/**
-* @param {Memory} bytes
-* @returns {Ed25519SigningKey}
-*/
   static from_keypair_bytes(bytes: Memory): Ed25519SigningKey;
-/**
-* @returns {Memory}
-*/
   to_bytes(): Memory;
-/**
-* @returns {Memory}
-*/
   to_keypair_bytes(): Memory;
-/**
-* @returns {Ed25519VerifyingKey}
-*/
   verifying_key(): Ed25519VerifyingKey;
-/**
-* @param {Memory} bytes
-* @returns {Ed25519Signature}
-*/
   sign(bytes: Memory): Ed25519Signature;
-/**
-* @param {Memory} bytes
-* @param {Ed25519Signature} signature
-* @returns {boolean}
-*/
   verify(bytes: Memory, signature: Ed25519Signature): boolean;
-/**
-* @param {Memory} bytes
-* @param {Ed25519Signature} signature
-* @returns {boolean}
-*/
   verify_strict(bytes: Memory, signature: Ed25519Signature): boolean;
 }
-/**
-*/
 export class Ed25519VerifyingKey {
   [Symbol.dispose](): void;
-/**
-* @param {Memory} bytes
-*/
   constructor(bytes: Memory);
-/**
-* @param {Memory} bytes
-* @returns {Ed25519VerifyingKey}
-*/
   static from_bytes(bytes: Memory): Ed25519VerifyingKey;
-/**
-* @returns {boolean}
-*/
   is_weak(): boolean;
-/**
-* @returns {Memory}
-*/
   to_bytes(): Memory;
-/**
-* @param {Memory} bytes
-* @param {Ed25519Signature} signature
-* @returns {boolean}
-*/
   verify(bytes: Memory, signature: Ed25519Signature): boolean;
-/**
-* @param {Memory} bytes
-* @param {Ed25519Signature} signature
-* @returns {boolean}
-*/
   verify_strict(bytes: Memory, signature: Ed25519Signature): boolean;
 }
-/**
-*/
 export class Memory {
   [Symbol.dispose](): void;
 /**
@@ -137,10 +54,23 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
+  readonly __wbg_ed25519verifyingkey_free: (a: number, b: number) => void;
+  readonly ed25519verifyingkey_from_bytes: (a: number) => [number, number, number];
+  readonly ed25519verifyingkey_is_weak: (a: number) => number;
+  readonly ed25519verifyingkey_to_bytes: (a: number) => number;
+  readonly ed25519verifyingkey_verify: (a: number, b: number, c: number) => number;
+  readonly ed25519verifyingkey_verify_strict: (a: number, b: number, c: number) => number;
+  readonly ed25519verifyingkey_new: (a: number) => [number, number, number];
+  readonly __wbg_ed25519signature_free: (a: number, b: number) => void;
+  readonly ed25519signature_from_bytes: (a: number) => [number, number, number];
+  readonly ed25519signature_to_bytes: (a: number) => number;
+  readonly ed25519signature_r_bytes: (a: number) => number;
+  readonly ed25519signature_s_bytes: (a: number) => number;
+  readonly ed25519signature_new: (a: number) => [number, number, number];
   readonly __wbg_ed25519signingkey_free: (a: number, b: number) => void;
   readonly ed25519signingkey_new: () => number;
-  readonly ed25519signingkey_from_bytes: (a: number, b: number) => void;
-  readonly ed25519signingkey_from_keypair_bytes: (a: number, b: number) => void;
+  readonly ed25519signingkey_from_bytes: (a: number) => [number, number, number];
+  readonly ed25519signingkey_from_keypair_bytes: (a: number) => [number, number, number];
   readonly ed25519signingkey_to_bytes: (a: number) => number;
   readonly ed25519signingkey_to_keypair_bytes: (a: number) => number;
   readonly ed25519signingkey_verifying_key: (a: number) => number;
@@ -148,26 +78,16 @@ export interface InitOutput {
   readonly ed25519signingkey_verify: (a: number, b: number, c: number) => number;
   readonly ed25519signingkey_verify_strict: (a: number, b: number, c: number) => number;
   readonly ed25519signingkey_random: () => number;
-  readonly __wbg_ed25519verifyingkey_free: (a: number, b: number) => void;
-  readonly ed25519verifyingkey_new: (a: number, b: number) => void;
-  readonly ed25519verifyingkey_from_bytes: (a: number, b: number) => void;
-  readonly ed25519verifyingkey_is_weak: (a: number) => number;
-  readonly ed25519verifyingkey_to_bytes: (a: number) => number;
-  readonly ed25519verifyingkey_verify: (a: number, b: number, c: number) => number;
-  readonly ed25519verifyingkey_verify_strict: (a: number, b: number, c: number) => number;
-  readonly __wbg_ed25519signature_free: (a: number, b: number) => void;
-  readonly ed25519signature_new: (a: number, b: number) => void;
-  readonly ed25519signature_from_bytes: (a: number, b: number) => void;
-  readonly ed25519signature_to_bytes: (a: number) => number;
-  readonly ed25519signature_r_bytes: (a: number) => number;
-  readonly ed25519signature_s_bytes: (a: number) => number;
   readonly __wbg_memory_free: (a: number, b: number) => void;
   readonly memory_new: (a: number, b: number) => number;
   readonly memory_ptr: (a: number) => number;
   readonly memory_len: (a: number) => number;
-  readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
   readonly __wbindgen_exn_store: (a: number) => void;
+  readonly __externref_table_alloc: () => number;
+  readonly __wbindgen_export_2: WebAssembly.Table;
+  readonly __externref_table_dealloc: (a: number) => void;
   readonly __wbindgen_malloc: (a: number, b: number) => number;
+  readonly __wbindgen_start: () => void;
 }
 
 export type SyncInitInput = BufferSource | WebAssembly.Module;
