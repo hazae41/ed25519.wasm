@@ -1,0 +1,13 @@
+[package]
+name = "daemon"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[dependencies]
+wasm-bindgen = { version = "=0.2.100", default-features = false }
+ed25519-dalek = { version = "=2.2.0", default-features = false, features = ["rand_core"] }
+rand_core = { version = "=0.6.4", default-features = false, features = ["getrandom"] }
+getrandom = { version = "=0.2.16", default-features = false, features = ["js"] }
+memory_wasm = { path = "../../node_modules/@hazae41/memory-wasm/out/wasm" }
